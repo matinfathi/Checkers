@@ -3,6 +3,7 @@
 # changing "DEPTH" parameter to 1 or 2.
 import numpy as np
 import random
+import json
 import time
 import os
 
@@ -448,7 +449,7 @@ def Game(W, lr, depth, verboos=1):
             if np.array_equal(prev_board, move5) and np.array_equal(board, move6):
                 text = 'Draw'
                 W = update_W(W, 0, prev_V, lr, blacks)
-                return text, W
+                return W, text
 
         # save_list.append(board)
 
@@ -480,6 +481,8 @@ if __name__ == '__main__':
     Wi = init_W()
 
     for i in range(EPOCHS):
-        W, t = Game(Wi, LR, DEPTH, 2)
+        W, t = Game(Wi, LR, DEPTH)
 
         print(t)
+
+    json.dump(W, open("weights.json", 'w'), indent=4)
